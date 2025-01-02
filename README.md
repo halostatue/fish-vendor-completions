@@ -41,25 +41,15 @@ case).
 
 ## Installation
 
-Install with [Fisher][fisher] (recommended):
+Install with [Fisher][fisher]:
 
 ```fish
-fisher install halostatue/fish-vendor-completions@v1.x
+fisher install halostatue/fish-vendor-completions@v1
 ```
-
-<details>
-<summary>Not using a package manager?</summary>
-
----
-
-Copy `functions/*.fish` to your fish configuration directory preserving the
-directory structure.
-
-</details>
 
 ### System Requirements
 
-- [fish][] 3.0+
+- [fish][fish] 3.2+
 
 ## Licence
 

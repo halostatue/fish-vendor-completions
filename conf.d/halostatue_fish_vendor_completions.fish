@@ -1,5 +1,5 @@
 status is-interactive
-or return
+or return 0
 
 set --global _halostatue_fvc_completions
 
@@ -91,7 +91,6 @@ function _halostatue_fvc
         end
     end
 end
-
 
 _halostatue_fvc atuin gen-completions --shell fish
 _halostatue_fvc chezmoi completion fish
