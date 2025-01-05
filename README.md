@@ -49,7 +49,7 @@ fisher install halostatue/fish-vendor-completions@v1
 
 ### System Requirements
 
-- [fish][fish] 3.2+
+- [fish][fish] 3.4+
 
 ## Licence
 

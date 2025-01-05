@@ -1,3 +1,5 @@
+# @halostatue/fish-vendor-completions/conf.d/halostatue_fish_vendor_completions.fish:v1.0.2
+
 status is-interactive
 or return 0
 
@@ -24,9 +26,9 @@ if command --query python
 end
 
 function _halostatue_fvc_newer
-    set --local fullcmd $argv[1]
+    set --function fullcmd $argv[1]
     set --erase argv[1]
-    set --local name (basename $fullcmd).fish
+    set --function name (basename $fullcmd).fish
 
     if ! set --query argv[1]
         set argv (string match --all --entire 'vendor_completions.d' $fish_complete_path)/$name
@@ -43,15 +45,15 @@ function _halostatue_fvc_python
     test -n "$_halostatue_fvc_python_bin"
     or return
 
-    set --local fullcmd (command --search $argv[1])
+    set --function fullcmd (command --search $argv[1])
     or return
 
-    set --local pybin (python -c "import os; import sys; print(os.path.realpath(sys.executable))")
+    set --function pybin (python -c "import os; import sys; print(os.path.realpath(sys.executable))")
     set pybin
 
     if _halostatue_fvc_newer $fullcmd
         if set --query halostatue_fish_vendor_completions_save
-            set --local completion $_halostatue_fvc_completions/$argv[1].fish
+            set --function completion $_halostatue_fvc_completions/$argv[1].fish
 
             $_halostatue_fvc_python_bin/register-python-argcomplete \
                 --shell fish $argv[1] >$completion
@@ -63,28 +65,28 @@ function _halostatue_fvc_python
 end
 
 function _halostatue_fvc
-    set --local fullcmd (command --search $argv[1])
+    set --function fullcmd (command --search $argv[1])
     or return
 
-    set --local cmd $argv[1]
+    set --function cmd $argv[1]
     set --erase argv[1]
 
     if _halostatue_fvc_newer $fullcmd
         if set --query halostatue_fish_vendor_completions_save
-            set --local completion $_halostatue_fvc_completions/$cmd.fish
+            set --function completion $_halostatue_fvc_completions/$cmd.fish
 
             switch $cmd
                 case atuin
                     $cmd $argv --out-dir $_halostatue_fvc_completions
                 case hof
-                    $cmd $argv | string replace -r '(alias _="hof")' '#$1' >$completion
+                    $cmd $argv | string replace --regex '(alias _="hof")' '#$1' >$completion
                 case '*'
                     $cmd $argv >$completion
             end
         else
             switch $cmd
                 case hof
-                    $cmd $argv | string replace -r '(alias _="hof")' '#$1'
+                    $cmd $argv | string replace --regex '(alias _="hof")' '#$1'
                 case '*'
                     $cmd $argv
             end | source
