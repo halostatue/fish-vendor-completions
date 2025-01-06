@@ -1,43 +1,91 @@
 # halostatue/fish-vendor-completions
 
-Many modern pieces of software include completions code available through the
-command line (such as `atuin gen-completions --shell <SHELL>`), and _most_ of
-them will print them so that they can be piped to `source`. Over time, I have
-captured a number of these completion commands as part of my `config.fish`
-script, but having a community-maintained version of these is better.
+[![Version[version]](https://github.com/halostatue/fish-vendor-completions/releases)
 
-The configuration scripts in this repository will run the completion generation
-command in one of two ways, depending on whether the variable
-`$halostatue_fish_vendor_completions_save` is set or not:
+Frequently, modern software includes subcommands to generate shell completion
+scripts (such as `chezmoi completion fish`). Many of these will print them to
+standard output so that they can be piped to `source` on Fish. Over time,
+I have captured a number of these completion commands as part of my
+`config.fish` script, but having a community-maintained version of these is
+better.
 
-1. If not set (the default), the output of the completion generation command is
-   piped to `source` (e.g., `atuin gen-completions --shell fish | source`).
+## Setup (`conf.d`)
 
-2. If set, the `mtime` on the binary and the shell file are compared (using
-   `test binary -nt completion`) and the completion file is written to
-   `$XDG_DATA_HOME/fish/vendor_completions.d/<binary>.fish`.
+The configuration script in this repository will try to run the fish
+completion generation commands for a number of programs on interactive shell
+startup.
 
-Either action will only be taken _if_ fish is running interactively and the
-command and any prerequisites (such as `register-python-argcomplete` for several
-Python programs‡) are present in `$PATH` at the time of execution. They will
-also only be taken only if the command is newer than any completion file that
-may be found in the _vendor_ directories `$fish_complete_path`. That way, if you
-have `fd` installed from MacPorts or Homebrew and `vendor_completions.d/fd.fish`
-exists and is not older than `fd`, a new version will not be saved or sourced.
+1. If a program is not present in `$PATH`, nothing happens.
+2. If `$halostatue_fish_vendor_completions_save` is not `1`, the completion
+   will be piped to `source` (`atuin gen-completion --shell fish | source`).
+3. If `$halostatue_fish_vendor_completions_save` is `1`, the completion may
+   be saved for lazy loading.
 
-I personally prefer the default method, since I no longer have to worry about
-whether there are completions for programs I have uninstalled. The option exists
-because the use of `vendor_completions.d` allows for lazy completion loading.
+### Lazy Loading
 
-> The initial implementation here is an all-or-nothing approach. It _may_ be
-> possible to make `$halostatue_fish_vendor_completions_save` contain a list of
-> completions that should be saved, or use a separate variable for that. This
-> would allow for staged conversion.
+Fish searches for completions to load lazily in the following paths (the
+default value of `$fish_complete_path`).
 
-‡ The example provided is somewhat incomplete. There is a bit more work done if
-there are Python programs as `register-python-argcomplete` might actually be
-called `register-python-argcomplete3.11` by a package manager (MacPorts, in this
-case).
+- End-user personal completions (`$XDG_CONFIG_HOME/fish/completions`)
+- System completions (`/etc/fish/completions` or
+  `$fish_prefix/etc/fish/completions`)
+- End-user vendor completions (`$XDG_DATA_HOME/fish/vendor_completions.d`)
+- System vendor completions (`$fish_prefix/share/fish/vendor_completions.d`)
+- Fish provided completions (`$fish_prefix/share/fish/completions`)
+- Automatically generated man completions
+  (`$XDG_DATA_HOME/fish/generated_completions`)
+
+The `conf.d` script will compare the `mtime` for each program executable and
+the completion files in any `vendor_completions.d` to see if the program is
+newer than the completion file (`test program -nt completion`). If it is,
+the file will be written to `$halostatue_fish_vendor_completions_d`, which
+defaults to `$XDG_DATA_HOME/fish/vendor_completions.d`.
+
+> `$fish_prefix` is relative to where `fish` is installed. For most Linux
+> distributions, `$fish_prefix` would be `/usr`. On macOS, where MacPorts or
+> Homebrew will typically be used to install `fish`, this would be one of
+> `/opt/local`, `/opt/homebrew`, or `/usr/local`.
+>
+> `$XDG_CONFIG_HOME` falls back to `~/.config` and `$XDG_DATA_HOME` falls back
+> to `~/.local/share` if unset.
+
+#### Completion Path Maintenance
+
+If lazy loading is used, it is recommended that you periodically clean the
+completion path. This can be done automatically by setting the universal
+variable `halostatue_fish_vendor_completions_d_clean` to any value, which will
+be unset at the completion of the script.
+
+This will remove any potentially managed completion script before update.
+
+This can also be managed with `halostatue_fish_vendor_completions refresh`
+or `halostatue_fish_vendor_completions clean`.
+
+#### Custom Completion Path
+
+A custom location for completions can be specified by setting
+`halostatue_fish_vendor_completions_d` as a universal variable. If this is
+done, it is your responsibility to ensure that `$fish_complete_path` contains
+this path in the appropriate location.
+
+## Supported Programs
+
+- atuin
+- chezmoi
+- fd
+- fnm
+- git-absorb
+- gix
+- hof
+- just
+- mise
+- op
+- orbctl
+- procs
+- prqlc
+- starship
+- uv
+- wezterm
 
 ## Installation
 
@@ -57,3 +105,4 @@ fisher install halostatue/fish-vendor-completions@v1
 
 [fisher]: https://github.com/jorgebucaran/fisher
 [fish]: https://github.com/fish-shell/fish-shell
+[version]: https://img.shields.io/github/tag/halostatue/fish-vendor-completions.svg?label=Version

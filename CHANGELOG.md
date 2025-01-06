@@ -1,5 +1,10 @@
 # fish-vendor-completions Changelog
 
+## 1.1.0 / 2025-01-06
+
+- Substantial rewrite to be safer, including a new function
+  (`halostatue_fish_vendor_completions`) to help manage the files.
+
 ## 1.0.2 / 2025-01-05
 
 - Added version information to comment tags.
