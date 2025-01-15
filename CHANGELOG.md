@@ -1,5 +1,11 @@
 # fish-vendor-completions Changelog
 
+## 1.1.1 / 2025-01-15
+
+- Modified `conf.d/halostatue_fish_vendor_completions.fish` to not exit early if
+  non-interactive or refreshing, ensuring the definition of the uninstall
+  function.
+
 ## 1.1.0 / 2025-01-06
 
 - Substantial rewrite to be safer, including a new function
