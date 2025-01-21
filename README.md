@@ -1,5 +1,15 @@
 # halostatue/fish-vendor-completions
 
+> [!IMPORTANT]
+>
+> This is the final release of this plugin, because the more I use it, the more it feels like the wrong solution (the correct solution is to get the distribution mechanism to generate and install these files in `system/vendor_completions.d`).
+>
+> - Of the applications supported, only six applications (`gix`, `pipx`, `pnpm`, `procs`, `prqlc`, and `wezterm`) have no included completion scripts by MacPorts or Homebrew.
+> - Of the applications supported, I no longer (or have never really) used `fnm`, `gix`, `hof`, `orbctl`, `pipx`, `starship`, and `wezterm`.
+>
+> For the most part, it is easier for me to open a PR to MacPorts to add the completion scripts than it is to maintain this script. So I'll be uninstalling it at the same time as I am publishing this and archiving it.
+
+
 [![Version[version]](https://github.com/halostatue/fish-vendor-completions/releases)
 
 Frequently, modern software includes subcommands to generate shell completion

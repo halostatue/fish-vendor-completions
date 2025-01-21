@@ -1,4 +1,4 @@
-# @halostatue/fish-vendor-completions/functions/halostatue_fish_vendor_completions.fish:v1.1.1
+# @halostatue/fish-vendor-completions/functions/halostatue_fish_vendor_completions.fish:v2.0.0
 
 function halostatue_fish_vendor_completions --description 'Manage generated fish completions'
     argparse h/help -- $argv

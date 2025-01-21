@@ -1,5 +1,12 @@
 # fish-vendor-completions Changelog
 
+## 2.0.0 / 2025-02-09
+
+- Removed `mise` setup into [halostatue/fish-mise][halostatue/fish-mise].
+- Removed `chezmoi` setup into
+  [halostatue/fish-chezmoi][halostatue/fish-chezmoi].
+- Archived this project.
+
 ## 1.1.1 / 2025-01-15
 
 - Modified `conf.d/halostatue_fish_vendor_completions.fish` to not exit early if
@@ -27,3 +34,6 @@
 ## 1.0.0 / 2023-10-29
 
 - Initial version
+
+[halostatue/fish-mise]: https://github.com/halostatue/fish-mise
+[halostatue/fish-chezmoi]: https://github.com/halostatue/fish-chezmoi
