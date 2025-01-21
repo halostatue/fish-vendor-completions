@@ -1,4 +1,6 @@
-# @halostatue/fish-vendor-completions/conf.d/halostatue_fish_vendor_completions.fish:v1.1.1
+# @halostatue/fish-vendor-completions/conf.d/halostatue_fish_vendor_completions.fish:v2.0.0-beta.1
+
+
 
 if status is-interactive || test "$halostatue_fish_vendor_completions_refresh" = 1
     set --local _hfvc_tag (random)(random)
@@ -66,8 +68,8 @@ if status is-interactive || test "$halostatue_fish_vendor_completions_refresh" =
         set --erase argv[1]
 
         set --function vendor_completions (
-        string match --all --entire vendor_completions.d $fish_complete_path
-    )
+            string match --all --entire vendor_completions.d $fish_complete_path
+        )
 
         set --function output $halostatue_fish_vendor_completions_d/$cmd.fish
 
@@ -76,9 +78,9 @@ if status is-interactive || test "$halostatue_fish_vendor_completions_refresh" =
             or return 1
 
             set --function py (
-            python -c "import os; import sys; print(os.path.realpath(sys.executable))" |
-                path dirname
-        )
+                python -c "import os; import sys; print(os.path.realpath(sys.executable))" |
+                    path dirname
+            )
 
             test -z $py
             and return 1
@@ -118,7 +120,6 @@ if status is-interactive || test "$halostatue_fish_vendor_completions_refresh" =
     _hfvc{$_hfvc_tag} gix generate-completions --shell fish
     _hfvc{$_hfvc_tag} hof completion fish
     _hfvc{$_hfvc_tag} just --completions fish
-    _hfvc{$_hfvc_tag} mise completion fish
     _hfvc{$_hfvc_tag} op completion fish
     _hfvc{$_hfvc_tag} orbctl completion fish
     _hfvc{$_hfvc_tag} pipx --python
